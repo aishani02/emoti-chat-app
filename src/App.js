@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import Login from './Login'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import Home from './Home'
+import { GlobalContextProvider } from './GlobalContext'
+import PrivateRoute from './PrivateRoute'
+import UserChat from './UserChat'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <GlobalContextProvider>
+        <Routes>
+          <Route path='/' element={<Login />} />
+
+          <Route path='/home' element={<PrivateRoute />}>
+            <Route path='/home' element={<Home />} />
+            <Route path='/home/:id' element={<UserChat />} />
+          </Route>
+        </Routes>
+
+        <ToastContainer />
+      </GlobalContextProvider>
+    </Router>
+  )
 }
 
-export default App;
+export default App
